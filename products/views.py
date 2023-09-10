@@ -108,3 +108,50 @@ def login(request):
           
      
      return render(request,'account/login.html')
+
+
+
+def add_product(request):
+     
+     user_info = request.user
+     user_extra_info = UserDetails.objects.get(kart_user_id = user_info.id)
+
+     
+     if not user_extra_info.is_seller:
+          messages.warning(request,'you are not a seller')
+          return redirect('home')
+     
+     category = ProductCat.objects.all()
+     
+     
+     if request.method == "POST":
+          
+          name= request.POST['name']
+          category= request.POST['category']
+          price= request.POST['price']
+          discount= request.POST['discount']
+          quantity= request.POST['quantity']
+          info= request.POST['info']
+          duration= request.POST['duration']
+          
+          product_img = request.FILES['product_img']
+          is_show = request.POST['is_show']
+          
+          if is_show == "True":
+               is_show = True
+          else:
+               is_show == False
+               
+          
+          try:
+               ProductInfo.objects.create(name=name,category_id =category,price=price,discount=discount,quantity=quantity,info=info,duration=duration,product_img=product_img,is_show=is_show)
+               messages.success(request,'product added')
+               return redirect('add_product')
+          except:
+               messages.error(request,'something went wrong')
+               return redirect('add_product')
+     
+     
+     
+     
+     return render(request,'products/add_product.html',{"categories":category})
