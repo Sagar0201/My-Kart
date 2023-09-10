@@ -65,7 +65,7 @@
 <section class="signup-page">
 
 
-     <form class="container" action="#" method="post"> {% csrf_token %}
+     <form class="container" action="{% url 'signup' %}" method="post"> {% csrf_token %}
 
           <h1 class="page-heading">Create Account</h1>
           
@@ -131,16 +131,16 @@
                     <label for="user_type" class="form-label">Who you are</label>
 
                     <div class="form-check">
-                         <input class="form-check-input" type="radio" name="user_type" id="reader"
-                              checked value="False">
-                         <label class="form-check-label" for="reader">
+                         <input class="form-check-input" type="radio" name="user_type" id="seller"
+                              checked value="True">
+                         <label class="form-check-label" for="seller">
                               I'm a Seller
                          </label>
                     </div>
 
                     <div class="form-check">
-                         <input class="form-check-input" type="radio" name="user_type" id="blogger" value="True">
-                         <label class="form-check-label" for="blogger">
+                         <input class="form-check-input" type="radio" name="user_type" id="customer" value="False">
+                         <label class="form-check-label" for="customer">
                               I'm a Customer
                          </label>
                     </div>
@@ -175,7 +175,7 @@
 
           <div class="mb-3">
 
-               <a class="nav-link" href="#">I have a account</a>
+               <a class="nav-link" href="{% url 'login' %}">I have a account</a>
           </div>
 
 

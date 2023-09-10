@@ -9,7 +9,7 @@
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
-     
+
 </head>
 
 <style>
@@ -18,7 +18,7 @@
      }
 
 
-     .navbar-brand{
+     .navbar-brand {
           text-transform: uppercase;
           font-weight: bold;
           color: rebeccapurple;
@@ -26,12 +26,17 @@
           font-size: 27px;
      }
 
-     nav{
+     nav {
           border-bottom: 1px solid rebeccapurple;
      }
 
 
-
+     .alert{
+          margin: 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+     }
 </style>
 
 
@@ -41,6 +46,16 @@
 {% endblock %}
 
 <body>
+
+          {% if messages %}
+          {% for message in messages %}
+
+          <div class="alert alert-primary" role="alert" id="alert">
+               <b>{{ message.tags }}</b> {{message}}
+               <button type="button" class="btn-close" aria-label="Close" id="pop-up" onclick="myAlert()"></button>
+          </div>
+          {% endfor %}
+          {% endif %}
 
 
      <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -76,12 +91,24 @@
 
      {% block  body %}
 
-     
+
 
      {% endblock %}
 
 
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+     </script>
+
+
+     <script>
+
+     
+          function myAlert(){
+               document.getElementById('alert').style.display = "none";
+          }
+
+     </script>
 
 
 
