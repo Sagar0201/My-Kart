@@ -20,8 +20,7 @@ from django.contrib import auth
 
 
 
-def home(request):
-     return render(request,'basic.html')
+
 
 def signup(request):
      
@@ -155,3 +154,25 @@ def add_product(request):
      
      
      return render(request,'products/add_product.html',{"categories":category})
+
+
+def home(request):
+     
+     
+     categories= ProductCat.objects.all()
+     
+     
+     product_by_cat =[]
+     
+     
+     for cat in categories:
+          
+          products= ProductInfo.objects.filter(category_id =cat.id )
+          
+          if products.exists():
+               product_data={'product_cat':cat.name,'product_info':products}
+               product_by_cat.append(product_data)
+               
+     
+     
+     return render(request,'products/index.html',{'categories':product_by_cat})
