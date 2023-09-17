@@ -44,12 +44,14 @@ class ProductInfo(models.Model):
      name = models.CharField(max_length=255)
      category = models.ForeignKey(ProductCat,on_delete= models.CASCADE)
      price = models.DecimalField(max_digits=8,decimal_places=2)
+     price_after_discount = models.DecimalField(max_digits=8,decimal_places=2,default=0.00)
      discount =  models.IntegerField()
      quantity = models.IntegerField()
      info = models.TextField()
      product_img = models.ImageField(upload_to ='ProductImgs',null=True,blank=True)
      is_show = models.BooleanField(default=True)
      duration = models.IntegerField()
+     
           
      created_at = models.DateTimeField(auto_now=True)
      updated_at = models.DateTimeField(auto_now_add=True)

@@ -141,9 +141,13 @@ def add_product(request):
           else:
                is_show == False
                
+               
+          price_after_discount =float(price)- (float(price) * float(discount))/100
+               
+          
           
           try:
-               ProductInfo.objects.create(name=name,category_id =category,price=price,discount=discount,quantity=quantity,info=info,duration=duration,product_img=product_img,is_show=is_show)
+               ProductInfo.objects.create(name=name,category_id =category,price=price,discount=discount,quantity=quantity,info=info,duration=duration,product_img=product_img,is_show=is_show,price_after_discount=price_after_discount)
                messages.success(request,'product added')
                return redirect('add_product')
           except:
@@ -176,3 +180,25 @@ def home(request):
      
      
      return render(request,'products/index.html',{'categories':product_by_cat})
+
+
+
+
+
+
+def search(request):
+     
+     query = request.GET.get('query')
+     
+     
+     name = ProductInfo.objects.filter(name__icontains=query)
+     category= ProductInfo.objects.filter(category__name__icontains=query)
+     price= ProductInfo.objects.filter(price__icontains=query)
+     info= ProductInfo.objects.filter(info__icontains=query)
+     
+     
+     search_results = name.union(category,price,info)
+     
+     
+     return render(request,'products\search.html',{'search_results':search_results,'query':query})
+     

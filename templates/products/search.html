@@ -1,0 +1,123 @@
+{% extends "basic.html" %}
+{% load static %}
+
+{% block style %}
+
+<style>
+
+
+     .search-results{
+          padding: 20px 70px;
+          
+     }
+
+     .search-title{
+          margin-top: 15px;
+          margin-bottom: 40px;
+     }
+
+     .product{
+          display: flex;
+          margin: 10px 0;
+          gap: 20px;
+          padding: 25px;
+          background-color: #fff;
+          border-bottom: 1px solid #ccc;
+          text-decoration: none;
+          color: black;
+     }
+
+     .product-img{
+          width: 300px;
+          height: 200px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+     }
+
+     .product-img img{
+          max-width: 100%;
+          height: 90%;
+          
+     }
+
+     .product-details{
+          width: 500px;
+     }
+
+     .product-details p{
+          margin-top: 20px;
+     }
+
+     .product-price{
+          padding: 0 20px;
+     }
+     .discount{
+          color: rgb(1, 181, 121);
+          font-size: 20px;
+          font-weight: 700;
+     }
+     .price-2{
+          color: #7b7979;
+          font-size: 17px;
+          font-weight: 600;
+     }
+     .product-price p{
+          margin-top: 15px;
+     }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+
+<section class="search-results">
+
+     <div class="search-title">
+          <h4>Results for - {{query}}</h4>
+     </div>
+
+     <div class="product-items">
+
+          {% if search_results %}
+
+          {% for product in search_results %}
+
+          <a class="product" href="#">
+
+               <div class="product-img">
+                    <img src="{{product.product_img.url}}" alt="">
+               </div>
+
+               <div class="product-details">
+                    <h4 class="product-name"><b>{{product.name}}</b></h4>
+                    <p>{{product.info | safe}}</p>
+
+               </div>
+
+               <div class="product-price">
+                    <h3>₹ {{product.price_after_discount}}</h3>
+                    <span class="price-2"> <s>₹ {{product.price}}</s> <span class="discount">{{product.discount}} % off</span></span>
+                    <p>Delivery in {{product.duration}} Days</p>
+
+
+               </div>
+
+
+          </a>
+          
+          {% endfor %}
+
+          {% else %}
+
+          <h1 class="text-center">Data not found</h1>
+
+          {% endif %}
+
+     </div>
+
+</section>
+
+
+{% endblock %}

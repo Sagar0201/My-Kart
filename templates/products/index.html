@@ -126,7 +126,7 @@
 
      <div class="product-cat-titles p-3">
           <h3 class="product-cat-name">{{cat.product_cat}}</h3>
-          <a href="#">More</a>
+          <a href="/search/?query={{cat.product_cat}}">More</a>
      </div>
 
 
@@ -136,7 +136,7 @@
           <a href="#" class="product-info"> 
                <img src="{{item.product_img.url}}" alt="">
                <p class="product-name">{{item.name}}</p>
-               <p class="product-price">Rs {{item.price}}</p>
+               <p class="product-price">Rs {{item.price_after_discount}}</p>
           </a>
 
           {% endfor %}
