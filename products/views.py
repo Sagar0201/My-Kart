@@ -202,3 +202,16 @@ def search(request):
      
      return render(request,'products\search.html',{'search_results':search_results,'query':query})
      
+     
+def product_item(request,id):
+     
+     try:
+          product=ProductInfo.objects.get(id=id)
+          return render(request,'products\product_item.html',{'product':product})
+     except:
+          messages.error(request,'data not found')
+          return redirect('home')
+     
+     
+     
+     

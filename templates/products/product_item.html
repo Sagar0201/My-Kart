@@ -1,0 +1,312 @@
+{% extends "basic.html" %}
+{% load static %}
+
+{% block style %}
+
+<style>
+     .product-item {
+          padding: 20px 100px;
+          display: flex;
+          gap: 30px;
+     }
+
+     .product-info-1 {
+          padding: 10px;
+     }
+
+     .product-image {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 530px;
+          border: 1px solid #ccc;
+     }
+
+     .product-image img {
+          width: 90%;
+     }
+
+     .product-option {
+          margin-top: 25px;
+          display: flex;
+          gap: 20px;
+     }
+
+     .product-option button {
+          border: none;
+          outline: none;
+          width: 50%;
+          padding: 12px;
+          font-weight: 700;
+          color: #fff;
+     }
+
+     .product-option button:nth-child(1) {
+          background-color: rgb(102, 197, 244);
+     }
+
+     .product-option button:nth-child(2) {
+          background-color: rgb(0, 97, 145);
+     }
+
+     .product-info-2 {
+          padding-top: 5px;
+          max-height: 80vh;
+          overflow: auto;
+     }
+     .product-info-2::-webkit-scrollbar {
+          display: none;
+     }
+
+     .product-price-info {
+          display: flex;
+          align-items: center;
+          margin: 15px 0;
+          gap: 20px;
+     }
+
+     .product-price-info s {
+          color: #b0a9a9;
+          font-weight: 600;
+     }
+
+     .product-price-info p {
+          margin: 0;
+          color: rgb(2, 176, 118);
+          font-weight: 600;
+          font-size: 20px;
+     }
+
+     .product-offer {
+          margin: 30px 0;
+     }
+
+     .product-desc {
+          margin-top: 20px;
+     }
+
+     .product-desc p {
+          font-weight: 400;
+          padding-left: 20px;
+          width: 250px;
+     }
+
+     .ratings {
+          margin-top: 20px;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+     }
+
+     .rate {
+          background-color: rgb(0, 157, 104);
+          color: #fff;
+          font-weight: 400;
+          padding: 1px 15px;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          border-radius: 5px;
+     }
+
+     .ratings-review {
+          color: #979191;
+          font-weight: 600;
+          font-size: 18px;
+     }
+
+
+     .rating-and-reviews {
+          margin-top: 30px;
+          border: 1px solid #ccc;
+          padding: 10px;
+          width: 700px;
+     }
+
+     .rating-count {
+          font-size: 30px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+     }
+
+     .rating-count svg {
+          width: 30px;
+     }
+
+     .rating-info {
+          display: flex;
+          flex-direction: row;
+          border-bottom: 1px solid #ccc;
+          padding-bottom: 10px;
+     }
+
+     .product-imgs {
+          display: flex;
+          overflow: auto;
+          gap: 10px;
+
+          margin: 20px auto;
+     }
+
+     .product-imgs img {
+          height: 140px;
+          flex: 1 0 auto;
+          padding: 5px;
+     }
+
+
+     .user-review {
+          margin-top: 5px;
+          border-top: 1px solid #ccc;
+          padding: 10px;
+     }
+
+     .user-review img {
+          height: 120px;
+     }
+
+     .user-comment {
+          margin: 10px 0;
+     }
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<section class="product-item">
+
+     <div class="product-info-1">
+
+          <div class="product-image">
+               <img src="{% static 'imgs/printer.webp' %}" alt="">
+          </div>
+
+          <div class="product-option">
+               <button type="submit">ADD TO CART</button>
+               <button type="submit">BUY NOW</button>
+          </div>
+
+     </div>
+
+     <div class="product-info-2">
+
+          <div class="product-price">
+               <h4>{{product.name}}</h4>
+
+               <div class="ratings">
+                    <span class="rate">4.2
+                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                              class="bi bi-star-fill" viewBox="0 0 16 16">
+                              <path
+                                   d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                         </svg>
+                    </span>
+
+                    <span class="ratings-review">614 Ratings & 75 Reviews</span>
+               </div>
+
+               <span class="product-price-info">
+                    <h2>₹ {{product.price_after_discount}}</h2>
+                    <s>₹ {{product.price}}</s>
+                    <p>{{product.discount}}% off</p>
+               </span>
+
+          </div>
+
+
+          <div class="product-offer">
+               <h5>Available offers</h5>
+               <ul>
+                    <li><b>Bank Offer</b> Cashback on Flipkart Axis Bank CardT&C</li>
+                    <li><b>Special PriceGet</b> extra ₹7401 off (price inclusive of cashback/coupon)T&C</li>
+                    <li><b>Partner OfferSign-up</b> for Flipkart Pay Later & get free Times Prime Benefits worth
+                         ₹10,000* </li>
+                    <li><b>Partner OfferPurchase</b> now & get 1 surprise cashback coupon in Future </li>
+               </ul>
+          </div>
+
+
+          <div class="product-desc">
+
+               <h5>Highlights</h5>
+               <p> {{product.info}}
+               </p>
+          </div>
+
+
+
+
+          <div class="rating-and-reviews">
+
+               <h2 class="rating-title">Ratings & Reviews</h2>
+
+
+               <div class="ratings rating-info">
+                    <span class="rating-count">4.2
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-star-fill"
+                              viewBox="0 0 16 16">
+                              <path
+                                   d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                         </svg>
+                    </span>
+
+                    <span class="ratings-review">614 Ratings & 75 Reviews</span>
+               </div>
+
+
+
+               <div class="product-imgs">
+
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    <img src="{% static 'imgs/printer.webp' %}" alt="">
+
+               </div>
+
+
+               <div class="user-review">
+
+
+                    <div class="rating-star">
+                         <div class="ratings">
+                              <span class="rate">4.2
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor"
+                                        class="bi bi-star-fill" viewBox="0 0 16 16">
+                                        <path
+                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                   </svg>
+                              </span>
+                              <span class="user-name">rio mario</span>
+
+                         </div>
+
+                         <p class="user-comment">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minima
+                              tempore ratione voluptatum eius corporis dicta quia quasi reiciendis nisi. Rerum.</p>
+
+                         <img src="{% static 'imgs/printer.webp' %}" alt="">
+                    </div>
+
+               </div>
+
+
+          </div>
+
+
+
+     </div>
+
+</section>
+
+{% endblock %}
