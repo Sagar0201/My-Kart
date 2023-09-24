@@ -205,13 +205,57 @@ def search(request):
      
 def product_item(request,id):
      
+
+     
+
+     
      try:
           product=ProductInfo.objects.get(id=id)
-          return render(request,'products\product_item.html',{'product':product})
+          reviews = RatingReview.objects.filter(product_id =id)
+          
+          rating_review_count= reviews.count()
+          
+          final_rating = 0
+          
+          for i in reviews:
+               final_rating += i.rating
+               
+          
+          if reviews.count != 0:
+               
+               final_rating = final_rating / rating_review_count
+               
+          else:
+               final_rating = 1
+          
+          
+          return render(request,'products\product_item.html',{'product':product,'reviews':reviews,'final_rating':final_rating,'rating_review_count':rating_review_count})
      except:
           messages.error(request,'data not found')
           return redirect('home')
      
      
      
+def rating_review(request):
      
+     if request.method == 'POST' and  request.user is not None :
+          
+          product_id = request.POST['product_id']
+          rating = request.POST['rating']
+          review = request.POST['review']
+          product_img = request.FILES['product_img']
+          
+          user_id = request.user.id
+          try:
+               RatingReview.objects.create(product_id = product_id,kart_user_id = user_id,rating=rating,review=review,product_img=product_img)
+               messages.success(request,'rating and review added')
+               return redirect(f'/product/{product_id}')
+          
+          except:
+               messages.error(request,'something went wrong')
+               
+          
+     else:
+          messages.error(request,'rating and review not added')
+          return redirect('home')
+          

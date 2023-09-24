@@ -132,7 +132,7 @@
      <div class="product-items">
 
           {% for item in cat.product_info %}
-          <a href="#" class="product-info"> 
+          <a href="/product/{{item.id}}" class="product-info"> 
                <img src="{{item.product_img.url}}" alt="">
                <p class="product-name">{{item.name}}</p>
                <p class="product-price">Rs {{item.price_after_discount}}</p>
