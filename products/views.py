@@ -205,30 +205,17 @@ def search(request):
      
 def product_item(request,id):
      
-
-     
-
-     
      try:
           product=ProductInfo.objects.get(id=id)
           reviews = RatingReview.objects.filter(product_id =id)
-          
           rating_review_count= reviews.count()
-          
           final_rating = 0
-          
           for i in reviews:
                final_rating += i.rating
-               
-          
-          if reviews.count != 0:
-               
+          if rating_review_count != 0:
                final_rating = final_rating / rating_review_count
-               
           else:
-               final_rating = 1
-          
-          
+               final_rating = 0
           return render(request,'products\product_item.html',{'product':product,'reviews':reviews,'final_rating':final_rating,'rating_review_count':rating_review_count})
      except:
           messages.error(request,'data not found')
@@ -259,3 +246,60 @@ def rating_review(request):
           messages.error(request,'rating and review not added')
           return redirect('home')
           
+          
+          
+def cart(request):
+     
+     if request.method == "POST":
+          
+          product_id  = request.POST['product_id']
+          action  = request.POST['action']
+          
+          
+          user_id = request.user.id
+          
+          cart_item = Cart.objects.filter(kart_user_id = user_id,product_id = product_id)
+          
+          if cart_item.count() == 0:
+               try:
+                    
+                    Cart.objects.create(kart_user_id = user_id,product_id = product_id)
+                    messages.success(request,'product added into cart')
+                    
+               except:
+                    messages.error(request,"something went wrong")
+               
+          else:
+               
+               if action =='delete':
+                    try:
+                         cart=Cart.objects.get(product_id= product_id) 
+                         cart.delete()
+                         messages.success(request,'product remove in cart')
+                    except:
+                         messages.error(request,"something went wrong")
+               else:
+                    messages.warning(request,'product already exits in cart')
+                    return redirect(f"/product/{product_id}")
+     
+     
+          
+     user_id = request.user.id
+     
+     cart_items = Cart.objects.filter(kart_user_id =user_id)
+     total_items = cart_items.count()
+     
+     total_price =0
+     final_price = 0
+     
+     
+     for item in cart_items:
+          total_price += item.product.price
+          final_price += item.product.price_after_discount
+     
+     discount_price = total_price - final_price
+
+          
+          
+     return render(request,'products\cart.html',{'cart_items':cart_items,'total_items':total_items,'total_price':total_price,'final_price':final_price,'discount_price':discount_price})
+     

@@ -32,20 +32,25 @@
           gap: 20px;
      }
 
+     .product-option form{
+          width: 100%;
+          display: flex;
+     }
+
      .product-option button {
           border: none;
           outline: none;
-          width: 50%;
+          width: 100%;
           padding: 12px;
           font-weight: 700;
           color: #fff;
      }
 
-     .product-option button:nth-child(1) {
+     .product-option  form:nth-child(1) button {
           background-color: rgb(102, 197, 244);
      }
 
-     .product-option button:nth-child(2) {
+     .product-option form:nth-child(2) button{
           background-color: rgb(0, 97, 145);
      }
 
@@ -241,8 +246,19 @@
           </div>
 
           <div class="product-option">
-               <button type="submit">ADD TO CART</button>
-               <button type="submit">BUY NOW</button>
+
+               <form action="{% url 'cart' %}" method="post" class="cart-form">{% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{product.id}}">
+                    <input type="hidden" name="action" value="add">
+                    <button type="submit">ADD TO CART</button>
+               </form>
+
+               <form action="" class="buy-now">
+                    <input type="hidden" name="product_id" value="{{product.id}}">
+                    <button type="submit">BUY NOW</button>
+               </form>
+               
+               
           </div>
 
      </div>

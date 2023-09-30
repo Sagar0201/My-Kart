@@ -1,0 +1,208 @@
+{% extends "basic.html" %}
+{% load static %}
+
+{% block style %}
+
+<style>
+
+
+     .search-results{
+          padding: 20px 70px;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+     }
+
+     .search-title{
+          margin-top: 15px;
+          margin-bottom: 40px;
+     }
+
+     .product{
+          display: flex;
+          margin: 10px 0;
+          gap: 20px;
+          padding: 25px;
+          background-color: #fff;
+          border-bottom: 1px solid #ccc;
+          text-decoration: none;
+          color: black;
+     }
+
+     .product-img{
+          width: 300px;
+          height: 200px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+     }
+
+     .product-img img{
+          max-width: 100%;
+          height: 90%;
+          
+     }
+
+     .product-details{
+          width: 500px;
+     }
+
+     .product-details p{
+          margin-top: 20px;
+     }
+
+     .product-price{
+          padding: 0 20px;
+     }
+     .discount{
+          color: rgb(1, 181, 121);
+          font-size: 20px;
+          font-weight: 700;
+     }
+     .price-2{
+          color: #7b7979;
+          font-size: 17px;
+          font-weight: 600;
+     }
+     .product-price p{
+          margin-top: 15px;
+     }
+
+
+     .cart-options{
+          border: 1px solid #ccc;
+          width: 25%;
+          padding: 20px;
+          margin: 20px 30px;
+          
+     }
+
+     .option-title{
+          margin-bottom: 30px ;
+          border-bottom: 1px dotted #ccc;
+          padding: 10px 0;
+     }
+
+     .option-item{
+          display: flex;
+          justify-content: space-between;
+          font-size: 18px;
+     }
+
+     .option-desc .option-item:nth-child(4){
+          border: 1px dotted #ccc;
+          margin: 10px 0;
+          padding: 10px 0;
+          border-left: 0;
+          border-right: 0;
+     }
+     .green{
+          color: rgb(0, 211, 141);
+          font-weight: 600;
+     }
+
+     .buy-or-remove{
+          display: flex;
+          gap:10px;
+     }
+
+
+
+</style>
+
+
+{% endblock %}
+
+{% block body %}
+
+
+<section class="search-results">
+
+
+     <div class="product-items">
+
+          {% if cart_items %}
+
+          {% for product in cart_items %}
+
+          <a class="product" href="/product/{{product.id}}">
+
+               <div class="product-img">
+                    <img src="{{product.product.product_img.url}}" alt="">
+               </div>
+
+               <div class="product-details">
+                    <h4 class="product-name"><b>{{product.product.name}}</b></h4>
+                    <p>{{product.product.info | safe}}</p>
+                    <span class="buy-or-remove">
+                         
+                         <form action="{% url 'cart' %}" method="post">{% csrf_token %}
+                              <input type="hidden" name="product_id" value="{{product.product.id}}">
+                              <input type="hidden" name="action" value="delete">
+                              <button type="submit" class="btn btn-danger">Remove</button>
+                         </form>
+
+                         <form action="">{% csrf_token %}
+                              <input type="hidden" name="product_id" value="{{product.product.id}}">
+                              <button type="submit" class="btn btn-success">Buy Now</button>
+                         </form>
+                    </span>
+
+               </div>
+
+               <div class="product-price">
+                    <h3>₹ {{product.product.price_after_discount}}</h3>
+                    <span class="price-2"> <s>₹ {{product.product.price}}</s> <span class="discount">{{product.discount}} % off</span></span>
+                    <p>Delivery in {{product.product.duration}} Days</p>
+
+
+               </div>
+
+
+          </a>
+          
+          {% endfor %}
+
+          {% else %}
+
+          <h1 class="text-center">Product not added into cart</h1>
+
+          {% endif %}
+
+     </div>
+
+
+     <div class="cart-options">
+          <div class="option-title">
+               <h3>PRICE DETAILS</h3>
+          </div>
+
+          <div class="option-desc">
+
+               <span class="option-item">
+                    <p>Price({{total_items}} items)</p>
+                    <p>₹ {{total_price}}</p>
+               </span>
+               <span class="option-item">
+                    <p>Discount</p>
+                    <p class="green">− ₹ {{discount_price}}</p>
+               </span>
+               <span class="option-item">
+                    <p>Delivery Charges</p>
+                    <p><s>₹160</s> Free</p>
+               </span>
+               <span class="option-item">
+                    <p><b>Total Amount</b></p>
+                    <p><b>₹ {{final_price}}</b></p>
+               </span>
+
+               <p class="green">You will save ₹ {{discount_price}} on this order</p>
+               
+
+          </div>
+     </div>
+
+</section>
+
+
+{% endblock %}

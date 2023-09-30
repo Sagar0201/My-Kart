@@ -82,8 +82,7 @@ class Cart(models.Model):
      created_at = models.DateTimeField(auto_now=True)
      updated_at = models.DateTimeField(auto_now_add=True)
      
-     def __str__(self):
-          return f'{product.name} {kart_user.username}'  
+
      
      
      
@@ -94,6 +93,4 @@ class ProductHistory(models.Model):
      created_at = models.DateTimeField(auto_now=True)
      updated_at = models.DateTimeField(auto_now_add=True)
      
-     def __str__(self):
-          return f'{product.name} {kart_user.username}'  
      

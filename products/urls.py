@@ -13,6 +13,7 @@ urlpatterns = [
      path('product/<int:id>',views.product_item,name="product_item"),
      
      path('rating-review/',views.rating_review, name='rating_review'),
+     path('cart',views.cart,name="cart"),
      
      
      
